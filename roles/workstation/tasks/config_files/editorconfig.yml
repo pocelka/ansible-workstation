@@ -1,0 +1,8 @@
+---
+
+- name: Copy Editorconfig configuration file.
+  tags: software,dot_file
+  become_user: "{{ user_name }}"
+  ansible.builtin.copy:
+    dest: "{{ user_home }}/.editorconfig"
+    src: editorconfig

@@ -1,0 +1,7 @@
+---
+
+- name: restart_autofs
+  tags: autofs,system,system setup
+  ansible.builtin.service:
+    name: autofs
+    state: restarted

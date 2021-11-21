@@ -1,0 +1,22 @@
+---
+
+# Enable custom repositories for additional software
+- name: Enable flatpack repository.
+  tags: system,setup,repository
+  community.general.flatpak_remote:
+    name: flathub
+    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
+    method: system
+    state: present
+
+# TODO: probably not needed when installing gnome edition as user can enable it during intial GUI setup
+# TODO: check why on fedora I get: Failed to validate GPG signature for rpmfusion-free-release-35-1.noarch
+#- name: system setup | repository | enable rpm fussion
+#  tags: system,repository
+#  ansible.builtin.dnf:
+#    name: "{{ item.name }}"
+#    state: present
+#  loop:
+#    - name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+#    - name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+

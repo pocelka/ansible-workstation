@@ -1,0 +1,18 @@
+---
+
+# Load distribution specific variables
+- include_vars: "{{ ansible_distribution }}.yml"
+  tags: always
+
+# Enable 3rd party repositories on Fedora
+- include_tasks: repositories.yml
+  when: ansible_distribution == 'Fedora'
+
+# install software
+- import_tasks: software_development.yml
+- import_tasks: software_utilities.yml
+
+- import_tasks: system_setup_all.yml
+- include_tasks: "system_setup_{{ ansible_distribution }}.yml"
+
+- import_tasks: packages.yml

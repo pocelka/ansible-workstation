@@ -1,0 +1,28 @@
+---
+
+# Some of these packages are already installed as part of base install.
+- name: Re-Install gnome packages.
+  tags: packages,software,gnome
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - eog                               # rotates images
+    - file-roller                       # for archive files
+    - gedit                             # text editor
+    - gnome-backgrounds
+    - gnome-boxes
+    - gnome-control-center
+    - gnome-disk-utility
+    - gnome-power-manager
+    - gnome-remote-desktop
+    - gnome-shell
+    - gnome-extensions-app
+    - gnome-system-monitor
+    - gnome-terminal
+    - gnome-tweaks
+    - nautilus
+  when:
+    - ansible_distribution == 'Fedora'
+    - gnome is defined
+    - gnome == true

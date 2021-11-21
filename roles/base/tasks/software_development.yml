@@ -1,0 +1,14 @@
+---
+
+- name: Install development packages.
+  tags: system,setup,dev,development,packages,software
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - git
+    - "{{ python_package }}"
+    - "{{ python_pip_package }}"
+    - "{{ python_virtualenv_package }}"
+    - "{{ python_psutil_package }}"
+    - pre-commit                              # for git repository pre-commit checks

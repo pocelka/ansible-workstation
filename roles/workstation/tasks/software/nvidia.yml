@@ -1,0 +1,19 @@
+---
+
+- name: Install nvidia drivers and related software.
+  tags: packages,software,nvidia
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - akmod-nvidia
+    - xorg-x11-drv-nvidia-cuda
+    - xorg-x11-drv-nvidia-cuda-libs
+    - vdpauinfo
+    - libva-vdpau-driver
+    - libva-utils
+    - vulkan
+  when:
+    - ansible_distribution == 'Fedora'
+    - nvidia is defined
+    - nvidia == true

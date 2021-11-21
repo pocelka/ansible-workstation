@@ -1,0 +1,28 @@
+---
+
+- name: Change (optimize) dnf settings.
+  tags: system,setup,dnf
+  community.general.ini_file:
+    path: /etc/dnf/dnf.conf
+    create: false
+    section: main
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    no_extra_spaces: true
+    state: present
+    backup: true
+  loop:
+    - option: fastestmirror
+      value: 1
+    - option: max_parallel_downloads
+      value: 10
+    - option: deltarpm
+      value: "True"
+    - option: defaultyes
+      value: "True"
+
+- name: Change hostname.
+  tags: system,setup
+  ansible.builtin.hostname:
+    name: fedora
+

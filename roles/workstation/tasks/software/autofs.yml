@@ -1,0 +1,63 @@
+---
+
+# This playbook is handling mounting shares from my htpc via NFS
+- name: Install autofs.
+  tags: packages,software,autofs
+  ansible.builtin.package:
+    name: autofs
+    state: latest
+  when:
+    - ansible_distribution == 'Fedora'
+    - autofs is defined
+    - autofs == true
+
+- name: Start and enable autofs daemon.
+  tags: packages,software,autofs
+  ansible.builtin.service:
+    name: autofs
+    state: started
+    enabled: true
+  when:
+    - ansible_distribution == 'Fedora'
+    - autofs is defined
+    - autofs == true
+
+- name: Copy autofs config files.
+  tags: packages,software,autofs
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  loop:
+    - src: autofs/auto.master
+      dest: "{{ autofs_master_path }}"
+    - src: autofs/auto.htpc
+      dest: "{{ autofs_htpc_path }}"
+  when:
+    - ansible_distribution == 'Fedora'
+    - autofs is defined
+    - autofs == true
+  notify: restart_autofs
+
+- name: Create directory for symbolic links.
+  tags: packages,software,autofs
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ user_home }}/htpc"
+    state: directory
+
+- name: Create symbolic links for HTPC shares.
+  tags: packages,software,autofs
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - src: /nfs/backup_medium
+      dest: "{{ user_home }}/htpc/backup_medium"
+    - src: /nfs/data
+      dest: "{{ user_home }}/htpc/data"

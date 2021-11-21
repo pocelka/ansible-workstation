@@ -1,0 +1,16 @@
+---
+
+- import_tasks: gnome/remove_software.yml
+- import_tasks: gnome/packages.yml
+
+- import_tasks: software/autofs.yml
+- import_tasks: software/bitwarden.yml
+- import_tasks: software/discord.yml
+- import_tasks: software/nvidia.yml
+- import_tasks: software/visual_studio_code.yml
+- import_tasks: software/vivaldi.yml
+- import_tasks: software/vlc.yml
+
+- import_tasks: config_files/editorconfig.yml
+- import_tasks: config_files/vim.yml
+- import_tasks: config_files/git.yml

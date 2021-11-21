@@ -1,0 +1,10 @@
+---
+
+- name: Install bitwarde.
+  tags: packages,software,bitwarden
+  community.general.flatpak:
+    name: com.bitwarden
+    state: present
+  when:
+    - bitwarden is defined
+    - bitwarden == true

@@ -1,0 +1,62 @@
+---
+
+################################################################################
+# pacman
+################################################################################
+- name: Get mirror list for pacman.
+  tags: system,setup,pacman
+  ansible.builtin.get_url:
+    url: "https://archlinux.org/mirrorlist/?country=AT&country=BE&country=CZ&country=FR&country=DE&country=HU&country=PL&country=SK&protocol=https&ip_version=4&use_mirror_status=on"
+    dest: "/etc/pacman.d/mirrorlist"
+    backup: true
+
+# TODO: check on VM if it has to be added also to /etc/pacman.conf in
+# sections core, extra, community, multilib as I changed this
+# after I updated mirror list manually.
+- name: Uncomment pacman mirror list.
+  tags: system,setup,pacman
+  ansible.builtin.replace:
+    dest: "/etc/pacman.d/mirrorlist"
+    regexp: '^#Server'
+    replace: 'Server'
+
+- name: Change pacman settings.
+  tags: system,setup,pacman
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    state: present
+    backup: true
+    regexp: "{{ item.old_line }}"
+    line: "{{ item.new_line }}"
+  loop:
+    - old_line: "^#Color"
+      new_line: "Color"
+    - old_line: "^#ParallelDownloads"
+      new_line: "ParallelDownloads = 10"
+
+################################################################################
+# pamac
+################################################################################
+- name: Change pamac settings.
+  tags: system,setup,pamac
+  ansible.builtin.lineinfile:
+    path: /etc/pamac.conf
+    state: present
+    backup: true
+    regexp: "{{ item.old_line }}"
+    line: "{{ item.new_line }}"
+  loop:
+    - old_line: "^#EnableAUR"
+      new_line: "EnableAUR"
+    - old_line: "^#CheckAURUpdates"
+      new_line: "CheckAURUpdates"
+    - old_line: "^MaxParallelDownloads"
+      new_line: "MaxParallelDownloads = 10"
+    - old_line: "^#CheckFlatpakUpdates"
+      new_line: "CheckFlatpakUpdates"
+    - old_line: "^#EnableFlatpak"
+      new_line: "EnableFlatpak"
+    - old_line: "^RefreshPeriod"
+      new_line: "RefreshPeriod = 24"
+    - old_line: "^#NoUpdateHideIcon"
+      new_line: "NoUpdateHideIcon"

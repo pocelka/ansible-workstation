@@ -1,0 +1,2 @@
+/nfs/backup_medium      -fstype=nfs,soft,intr,rsize=8192,wsize=8192     192.168.1.3:/home/b0rg/backup_medium
+/nfs/data               -fstype=nfs,soft,intr,rsize=8192,wsize=8192     192.168.1.3:/home/b0rg/data

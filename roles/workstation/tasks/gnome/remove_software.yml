@@ -1,0 +1,15 @@
+---
+
+- name: Remove not needed gnome packages.
+  tags: packages,software,gnome
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - cheese
+    - gnome-photos
+    - totem
+  when:
+    - ansible_distribution == 'Fedora'
+    - gnome is defined
+    - gnome == true

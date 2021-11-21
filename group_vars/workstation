@@ -1,0 +1,29 @@
+---
+
+################################################################################
+# This file contains global settings and switches which determine if something
+# will be or won't be installed.
+################################################################################
+
+################################################################################
+# Global
+################################################################################
+# user info
+user_name: peter
+user_home: /home/peter
+
+################################################################################
+# Switches
+################################################################################
+# application selection
+autofs: true
+bitwarden: true
+discord: true
+mailspring: true
+nvidia: true
+vlc: true
+visual_studio_code: true
+vivaldi: true
+
+# desktop environments
+gnome: true

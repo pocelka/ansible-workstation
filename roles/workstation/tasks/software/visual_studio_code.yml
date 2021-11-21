@@ -1,0 +1,26 @@
+---
+
+- name: Add repository for visual studio code.
+  tags: system,packages,software,vscode,repository
+  ansible.builtin.yum_repository:
+    name: vscode
+    description: vscode
+    baseurl: "https://packages.microsoft.com/yumrepos/vscode"
+    file: vscode
+    enabled: true
+    gpgcheck: true
+    gpgkey: "https://packages.microsoft.com/keys/microsoft.asc"
+  when:
+    - ansible_distribution == 'Fedora'
+    - visual_studio_code is defined
+    - visual_studio_code == true
+
+- name: Install visual studio code.
+  tags: packages,sofware,vscode
+  ansible.builtin.package:
+    name: code
+    state: latest
+  when:
+    - ansible_distribution == 'Fedora'
+    - visual_studio_code is defined
+    - visual_studio_code == true

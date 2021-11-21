@@ -1,0 +1,26 @@
+---
+
+- name: Add repository for vivaldi browser.
+  tags: system,packages,software,vivaldi,repository
+  ansible.builtin.yum_repository:
+    name: vivaldi
+    description: vivaldi
+    baseurl: "https://repo.vivaldi.com/archive/rpm/$basearch"
+    file: vivaldi-fedora
+    enabled: true
+    gpgcheck: true
+    gpgkey: "https://repo.vivaldi.com/archive/linux_signing_key.pub"
+  when:
+    - ansible_distribution == 'Fedora'
+    - vivaldi is defined
+    - vivaldi == true
+
+- name: Install vivaldi.
+  tags: packages,software,vivaldi
+  ansible.builtin.package:
+    name: vivaldi-stable
+    state: latest
+  when:
+    - ansible_distribution == 'Fedora'
+    - vivaldi is defined
+    - vivaldi == true

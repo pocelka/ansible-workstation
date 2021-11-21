@@ -1,0 +1,8 @@
+---
+
+- name: Install microcode package for intel.
+  tags: system,packages,cpu,intel,microcode
+  ansible.builtin.package:
+    name: "{{ intel_microcode_package }}"
+    state: latest
+

@@ -1,0 +1,26 @@
+---
+
+################################################################################
+# general
+################################################################################
+# Note: At present nvidia drivers don't work well with wayland. Therefore Manjaro
+# will automatically set X11 even though wayland is enabled.
+#- name: system setup | config | enable wayland
+#  tags: system,config
+#  ansible.builtin.lineinfile:
+#    path: /etc/gdm/custom.conf
+#    state: present
+#    backup: true
+#    regexp: "^WaylandEnable="
+#    line: "WaylandEnable=True"
+
+################################################################################
+# services
+################################################################################
+- name: Enable service for SSD trim.
+  tags: system,service,ssd
+  ansible.builtin.service:
+    name: "fstrim.timer"
+    enabled: true
+    state: started
+

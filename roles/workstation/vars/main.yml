@@ -1,0 +1,4 @@
+---
+
+autofs_master_path: "/etc/auto.master"
+autofs_htpc_path: "/etc/auto.htpc"

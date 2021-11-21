@@ -1,0 +1,12 @@
+---
+
+python_package: python3
+python_pip_package: python3-pip
+python_psutil_package: python3-psutil                    # required for dconf
+python_virtualenv_package: python3-virtualenv
+
+lm_sensors_package: lm_sensors
+nfs_client_package: nfs-utils
+vim_package: vim-enhanced
+
+intel_microcode_package: microcode_ctl

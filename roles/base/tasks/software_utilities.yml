@@ -1,0 +1,27 @@
+---
+
+- name: Install utility packages.
+  tags: system,setup,packages,software
+  ansible.builtin.package:
+    state: latest
+    name:
+      - curl
+      - htop
+      - "{{ lm_sensors_package }}"
+      - neofetch
+      - net-tools
+      - "{{ nfs_client_package }}"
+      - rsync
+      - screen
+      - "{{ vim_package }}"
+      - wget
+      - whois
+      - zsh
+
+- name: Install utility packages (Fedora only).
+  tags: system,setup,packages,software
+  ansible.builtin.package:
+    state: latest
+    name:
+      - dnf-utils
+  when: ansible_distribution == 'Fedora'

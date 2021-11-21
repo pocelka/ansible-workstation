@@ -1,0 +1,43 @@
+---
+
+- name: Workstation pre-setup.
+  tags: always
+  hosts: workstation
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: Update package cache (fedora)
+      tags: always
+      ansible.builtin.dnf: update_cache=yes
+      changed_when: False
+      when: ansible_distribution == "Fedora"
+
+    - name: Update package cache (arch)
+      tags: always
+      community.general.pacman: update_cache=yes
+      changed_when: False
+      when: ansible_distribution == "Archlinux"
+
+    - name: Update package cache (debian, etc)
+      tags: always
+      ansible.builtin.apt: update_cache=yes
+      changed_when: False
+      when: ansible_distribution in ["Debian", "Ubuntu"]
+
+# Run Roles
+- name: Run base setup.
+  tags: base
+  hosts: workstation
+  gather_facts: true
+  roles:
+    - base
+
+- name: Run specific setup for workstation.
+  tags: workstation
+  hosts: workstation
+  gather_facts: true
+  become: true
+  roles:
+    - workstation
+

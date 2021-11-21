@@ -1,0 +1,9 @@
+- name: Install vlc.
+  tags: packages,software,vlc
+  become_user: "{{ user_name }}"
+  community.general.flatpak:
+    name: org.videolan.VLC
+    state: present
+  when:
+    - vlc is defined
+    - vlc == true
