@@ -1,7 +1,14 @@
 ---
 
+- name: Copy git commit template.
+  tags: software,dot_file,git
+  become_user: "{{ user_name }}"
+  ansible.builtin.copy:
+    dest: "{{ user_home }}/.git_commit_template"
+    src: git_commit_template
+
 - name: Create git global configuration.
-  tags: software,dot_file
+  tags: software,dot_file,git
   become_user: "{{ user_name }}"
   community.general.git_config:
     scope: global
@@ -16,3 +23,5 @@
       value: vim
     - name: init.defaultBranch
       value: main
+    - name: commit.template
+      value: "{{ user_home }}/.git_commit_template"
