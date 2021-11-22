@@ -10,4 +10,4 @@ repos:
     - id: check-added-large-files
     - id: fix-byte-order-marker
     - id: check-merge-conflict
-#    - id: no-commit-to-branch
+    - id: no-commit-to-branch
