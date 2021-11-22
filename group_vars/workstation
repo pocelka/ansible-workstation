@@ -19,6 +19,7 @@ user_home: /home/peter
 autofs: true
 bitwarden: true
 discord: true
+dconf_editor: true
 mailspring: true
 nvidia: true
 vlc: true

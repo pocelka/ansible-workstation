@@ -1,0 +1,10 @@
+---
+- name: Install dconf editor.
+  tags: packages,software,dconf_editor
+  ansible.builtin.package:
+    name: dconf-editor
+    state: latest
+  when:
+    - ansible_distribution == 'Fedora'
+    - dconf_editor is defined
+    - dconf_editor == true
