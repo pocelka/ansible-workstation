@@ -1,14 +1,16 @@
 # Motivation
 
-Lately I decided that Linux is better environment for my daily work, although I still use Windows 10 for gaming. One thing which is always a problem, as with any re-installation is the following setup. I choose Ansible as my go to tool for configuration as it is easier to document and execute compared to shell scripts.
+Lately I decided that at home, Linux is better environment for my daily work, although I still use Windows 10 for gaming. As with any OS setup, it takes time to configure everything. I decided to use Ansible as my go to tool for configuration as it is easier to document and execute compared to shell scripts.
 
-I wanted to use Manjaro as I didn't have issue in the past with it and it has great package manager. However it broke after first update so I decided to use Fedora gnome edition instead. Over the year I used mainly Windows and KDE seemed like better option to not change dramatically my flow, however after short proof of concept for Ansible playbook it looked like it would be nightmare to configure kde with Ansible. So I decided to use gnome instead and so far I like it.
+In the past I used Fedora, Ubuntu and Manjaro, however after few issues with Manjaro a decided to go back to Fedora. Over the years when I used mainly Windows, KDE looked like obvious alternative, but after short proof of concept with Ansible playbook I decided to use Gnome instead.
 
-This repository contains copy of configuration that I'm using for my personal setup of my workstation (locally). While you can run it by yourself, I encourage you to inspect and modify roles before first usage.
+This repository contains copy of configuration that I'm using for my personal setup of my workstation (locally).
+
+While you can run it by yourself, I encourage you to inspect and modify roles before first usage.
 
 ## Pre-Setup
 
-At home I have several computers. On my Ubuntu based HTPC in living room I want to share some disks using NFS.
+At home I have several computers. From Ubuntu based HTPC in living room I want to share some disks using NFS.
 
 To share data over NFS I need to modify `/etc/exports` and add the following lines:
 
@@ -42,4 +44,7 @@ In order to be able to run Ansible playbooks I need to install few basic things 
     # clone or download repository
     # make changes to group_vars/workstation
     ansible-playbook all.yml
+
+    # or run just specific tag
+    ansible-playbook -t [tag] all.yml
     ```
