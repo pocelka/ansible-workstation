@@ -5,8 +5,9 @@
 
 - import_tasks: software/autofs.yml
 - import_tasks: software/bitwarden.yml
-- import_tasks: software/discord.yml
+- import_tasks: software/dbeaver.yml
 - import_tasks: software/dconf_editor.yml
+- import_tasks: software/discord.yml
 - import_tasks: software/nvidia.yml
 - import_tasks: software/visual_studio_code.yml
 - import_tasks: software/vivaldi.yml
