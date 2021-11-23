@@ -6,5 +6,6 @@
     name: com.discordapp.Discord
     state: present
   when:
-    - bitwarden is defined
-    - bitwarden == true
+    - ansible_distribution == 'Fedora'
+    - discord is defined
+    - discord == true
