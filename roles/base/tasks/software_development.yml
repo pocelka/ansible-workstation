@@ -12,3 +12,5 @@
     - "{{ python_virtualenv_package }}"
     - "{{ python_psutil_package }}"
     - pre-commit                              # for git repository pre-commit checks
+    - ShellCheck
+    - jq
