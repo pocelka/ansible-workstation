@@ -22,6 +22,7 @@ discord: true
 dbeaver: true
 dconf_editor: true
 mailspring: true
+mailspring_theme: false                 # currently disabled as themes don't show correctly gmail nested folders/labels
 nvidia: true
 vlc: true
 visual_studio_code: true
