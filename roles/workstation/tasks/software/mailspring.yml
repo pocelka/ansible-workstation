@@ -1,0 +1,27 @@
+---
+
+- name: Install Mailspring.
+  tags: packages,software,mailspring
+  community.general.flatpak:
+    name: com.getmailspring.Mailspring
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - mailspring is defined
+    - mailspring == true
+
+- name: Download Mailspring themes
+  tags: packages,software,mailspring
+  become_user: "{{ user_name }}"
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ user_home }}/.var/app/com.getmailspring.Mailspring/config/Mailspring/packages/{{ item.dest }}"
+  loop:
+    - repo: "https://github.com/jakubzet/mailspring-matcha-theme"
+      dest: matcha
+    - repo: "https://github.com/paulatz/Mailspring-Theme-Breeze-Light"
+      dest: breeze-light
+  when:
+    - ansible_distribution == 'Fedora'
+    - mailspring_theme is defined
+    - mailspring_theme == true
