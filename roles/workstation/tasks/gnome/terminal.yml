@@ -1,0 +1,35 @@
+---
+
+- name: Change gnome-terminal settings.
+  tags: gnome,gnome_settings,gnome-terminal
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
+    value: "{{ item.value}}"
+  loop:
+    - key: use-system-font
+      value: "false"
+    - key: font
+      value: "'Monospace 11'"
+    - key: scrollback-unlimited
+      value: "true"
+
+- name: Change gnome-terminal shortcuts.
+  tags: gnome,gnome_settings,gnome-terminal
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/terminal/legacy/keybindings/{{ item.key }}"
+    value: "{{ item.value}}"
+  loop:
+    - key: close-tab
+      value: "'<Control>w'"
+    - key: new-tab
+      value: "'<Control>t'"
+    - key: copy
+      value: "'<Control>c'"
+    - key: paste
+      value: "'<Control>v'"
+    - key: find
+      value: "'<Control>F'"
+    - key: find-next
+      value: "'F3'"
