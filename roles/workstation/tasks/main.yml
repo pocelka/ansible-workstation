@@ -4,6 +4,7 @@
 - import_tasks: gnome/packages.yml
 - import_tasks: gnome/terminal.yml
 - import_tasks: gnome/gnome_shell.yml
+- import_tasks: gnome/gnome_settings.yml
 
 - import_tasks: software/autofs.yml
 - import_tasks: software/bitwarden.yml
