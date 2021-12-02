@@ -11,6 +11,7 @@
     - "{{ python_pip_package }}"
     - "{{ python_virtualenv_package }}"
     - "{{ python_psutil_package }}"
+    - "{{ python_ansible_lint }}"
     - pre-commit                              # for git repository pre-commit checks
     - ShellCheck
     - jq
