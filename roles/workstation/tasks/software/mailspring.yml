@@ -8,7 +8,7 @@
   when:
     - ansible_distribution == 'Fedora'
     - mailspring is defined
-    - mailspring == true
+    - mailspring
 
 - name: Download Mailspring themes
   tags: packages,software,mailspring
@@ -16,6 +16,7 @@
   ansible.builtin.git:
     repo: "{{ item.repo }}"
     dest: "{{ user_home }}/.var/app/com.getmailspring.Mailspring/config/Mailspring/packages/{{ item.dest }}"
+    version: master
   loop:
     - repo: "https://github.com/jakubzet/mailspring-matcha-theme"
       dest: matcha
@@ -24,4 +25,4 @@
   when:
     - ansible_distribution == 'Fedora'
     - mailspring_theme is defined
-    - mailspring_theme == true
+    - mailspring_theme

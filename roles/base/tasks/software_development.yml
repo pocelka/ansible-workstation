@@ -4,7 +4,7 @@
   tags: system,setup,dev,development,packages,software
   ansible.builtin.package:
     name: "{{ item }}"
-    state: latest
+    state: present
   loop:
     - git
     - "{{ python_package }}"

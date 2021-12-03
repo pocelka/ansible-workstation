@@ -5,11 +5,11 @@
   tags: packages,software,autofs
   ansible.builtin.package:
     name: autofs
-    state: latest
+    state: present
   when:
     - ansible_distribution == 'Fedora'
     - autofs is defined
-    - autofs == true
+    - autofs
 
 - name: Start and enable autofs daemon.
   tags: packages,software,autofs
@@ -20,7 +20,7 @@
   when:
     - ansible_distribution == 'Fedora'
     - autofs is defined
-    - autofs == true
+    - autofs
 
 - name: Copy autofs config files.
   tags: packages,software,autofs
@@ -39,7 +39,7 @@
   when:
     - ansible_distribution == 'Fedora'
     - autofs is defined
-    - autofs == true
+    - autofs
   notify: restart_autofs
 
 - name: Create directory for symbolic links.
@@ -48,6 +48,7 @@
   ansible.builtin.file:
     path: "{{ user_home }}/htpc"
     state: directory
+    mode: 0775
 
 - name: Create symbolic links for HTPC shares.
   tags: packages,software,autofs

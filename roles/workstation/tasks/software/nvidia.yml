@@ -4,7 +4,7 @@
   tags: packages,software,nvidia
   ansible.builtin.package:
     name: "{{ item }}"
-    state: latest
+    state: present
   loop:
     - akmod-nvidia
     - xorg-x11-drv-nvidia-cuda
@@ -16,4 +16,4 @@
   when:
     - ansible_distribution == 'Fedora'
     - nvidia is defined
-    - nvidia == true
+    - nvidia

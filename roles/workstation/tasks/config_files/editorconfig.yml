@@ -6,3 +6,4 @@
   ansible.builtin.copy:
     dest: "{{ user_home }}/.editorconfig"
     src: editorconfig
+    mode: 0600
