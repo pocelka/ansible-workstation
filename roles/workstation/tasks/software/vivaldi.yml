@@ -13,14 +13,14 @@
   when:
     - ansible_distribution == 'Fedora'
     - vivaldi is defined
-    - vivaldi == true
+    - vivaldi
 
 - name: Install vivaldi.
   tags: packages,software,vivaldi
   ansible.builtin.package:
     name: vivaldi-stable
-    state: latest
+    state: present
   when:
     - ansible_distribution == 'Fedora'
     - vivaldi is defined
-    - vivaldi == true
+    - vivaldi

@@ -6,4 +6,4 @@
     state: present
   when:
     - vlc is defined
-    - vlc == true
+    - vlc

@@ -8,4 +8,4 @@
   when:
     - ansible_distribution == 'Fedora'
     - discord is defined
-    - discord == true
+    - discord

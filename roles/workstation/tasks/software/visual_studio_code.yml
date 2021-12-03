@@ -13,14 +13,14 @@
   when:
     - ansible_distribution == 'Fedora'
     - visual_studio_code is defined
-    - visual_studio_code == true
+    - visual_studio_code
 
 - name: Install visual studio code.
   tags: packages,sofware,vscode
   ansible.builtin.package:
     name: code
-    state: latest
+    state: present
   when:
     - ansible_distribution == 'Fedora'
     - visual_studio_code is defined
-    - visual_studio_code == true
+    - visual_studio_code

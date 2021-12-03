@@ -3,7 +3,7 @@
 - name: Install utility packages.
   tags: system,setup,packages,software
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - curl
       - htop
@@ -21,7 +21,7 @@
 - name: Install utility packages (Fedora only).
   tags: system,setup,packages,software
   ansible.builtin.package:
-    state: latest
+    state: present
     name:
       - dnf-utils
   when: ansible_distribution == 'Fedora'

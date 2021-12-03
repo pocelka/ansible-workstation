@@ -30,3 +30,20 @@ vivaldi: true
 
 # desktop environments
 gnome: true
+
+################################################################################
+# Others
+################################################################################
+
+# This list is used to define list of applications which will be showed as
+# favorites in activities start screen.
+favorite_applications:
+  - "vivaldi-stable.desktop"
+  - "com.discordapp.Discord.desktop"
+  - "code.desktop"                          # Visual Studio Code
+  - "com.getmailspring.Mailspring.desktop"
+  #- firefox.desktop
+  #- org.gnome.Calendar.desktop
+  - "org.gnome.Nautilus.desktop"
+  - "org.gnome.Software.desktop"
+  - "org.gnome.Terminal.desktop"

@@ -3,8 +3,8 @@
   tags: packages,software,dconf_editor
   ansible.builtin.package:
     name: dconf-editor
-    state: latest
+    state: present
   when:
     - ansible_distribution == 'Fedora'
     - dconf_editor is defined
-    - dconf_editor == true
+    - dconf_editor

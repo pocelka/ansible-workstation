@@ -1,5 +1,6 @@
 ---
 
+python_ansible_lint: python3-ansible-lint
 python_package: python3
 python_pip_package: python3-pip
 python_psutil_package: python3-psutil                    # required for dconf

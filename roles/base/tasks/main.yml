@@ -1,7 +1,8 @@
 ---
 
 # Load distribution specific variables
-- include_vars: "{{ ansible_distribution }}.yml"
+- name: Include distribution specific variables.
+  include_vars: "{{ ansible_distribution }}.yml"
   tags: always
 
 # Enable 3rd party repositories on Fedora

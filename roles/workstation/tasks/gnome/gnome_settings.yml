@@ -1,0 +1,44 @@
+---
+
+- name: Enable user auto login.
+  tags: gnome,gnome_settings,auto_login
+  community.general.ini_file:
+    backup: true
+    create: false
+    path: /etc/gdm/custom.conf
+    section: daemon
+    option: AutomaticLoginEnable
+    value: "True"
+    state: present
+
+- name: Add Slovak keyboard
+  tags: gnome,gnome_settings,keyboard
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/input-sources/sources"
+    value: "[('xkb', 'us'), ('xkb', 'sk+qwerty')]"
+
+- name: Set same keyboard for every window.
+  tags: gnome,gnome_settings,keyboard
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/input-sources/per-window"
+    value: "false"
+
+- name: Set global keyboard shortcuts
+  tags: gnome,gnome_settings,keyboard
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+    value: "{{ item. value }}"
+  loop:
+    - key: "switch-applications"
+      value: "@as []"
+    - key: "switch-applications-backward"
+      value: "@as []"
+    - key: "switch-windows"
+      value: "['<Alt>Tab']"
+    - key: "switch-windows-backward"
+      value: "@as []"
+    - key: "show-desktop"
+      value: "['<Super>d']"

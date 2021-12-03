@@ -1,0 +1,8 @@
+---
+
+- name: Add favorites applications to dock.
+  tags: gnome,gnome_settings,gnome-shell
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/shell/favorite-apps"
+    value: "{{ favorite_applications }}"    # TODO: When executed it shows warning that list was converted to string.

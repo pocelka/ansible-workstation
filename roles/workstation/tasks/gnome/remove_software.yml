@@ -12,4 +12,4 @@
   when:
     - ansible_distribution == 'Fedora'
     - gnome is defined
-    - gnome == true
+    - gnome
