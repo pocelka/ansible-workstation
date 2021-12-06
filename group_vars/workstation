@@ -21,6 +21,7 @@ bitwarden: true
 discord: true
 dbeaver: true
 dconf_editor: true
+hexchat: true
 mailspring: true
 mailspring_theme: false                 # currently disabled as themes don't show correctly gmail nested folders/labels
 nvidia: true

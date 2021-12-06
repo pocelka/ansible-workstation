@@ -1,0 +1,19 @@
+---
+
+- name: Install irc client.
+  tags: packages,software,hexchat,irc
+  ansible.builtin.package:
+    name: hexchat
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - hexchat is defined
+    - hexchat
+
+- name: Create DCC download directory.
+  tags: packages,software,hexchat,irc
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ user_home }}/Downloads/irc"
+    mode: 0700
+    state: directory
