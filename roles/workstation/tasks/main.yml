@@ -10,6 +10,7 @@
 - import_tasks: software/bitwarden.yml
 - import_tasks: software/dbeaver.yml
 - import_tasks: software/dconf_editor.yml
+- import_tasks: software/fonts.yml
 - import_tasks: software/hexchat.yml
 - import_tasks: software/discord.yml
 - import_tasks: software/mailspring.yml
