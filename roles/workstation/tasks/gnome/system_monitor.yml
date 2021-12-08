@@ -1,0 +1,13 @@
+---
+
+- name: Change system monitor settings
+  tags: gnome,gnome_settings,system_monitor
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/gnome-system-monitor/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "current-tab"
+      value: "'resources'"
+    - key: "show-dependencies"
+      value: "true"

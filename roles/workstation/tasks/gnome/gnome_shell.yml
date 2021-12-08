@@ -6,3 +6,10 @@
   community.general.dconf:
     key: "/org/gnome/shell/favorite-apps"
     value: "{{ favorite_applications }}"    # TODO: When executed it shows warning that list was converted to string.
+
+- name: Enable min/max buttons.
+  tags: gnome,gnome_settings,buttons
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/preferences/button-layout"
+    value: "'appmenu:minimize,maximize,close'"

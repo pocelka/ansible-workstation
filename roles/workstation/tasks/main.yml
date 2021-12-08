@@ -1,11 +1,16 @@
 ---
 
+# Gnome settings
 - import_tasks: gnome/remove_software.yml
 - import_tasks: gnome/packages.yml
 - import_tasks: gnome/terminal.yml
 - import_tasks: gnome/gnome_shell.yml
 - import_tasks: gnome/gnome_settings.yml
+- import_tasks: gnome/nautilus.yml
+- import_tasks: gnome/gedit.yml
+- import_tasks: gnome/system_monitor.yml
 
+# Installation of additional software.
 - import_tasks: software/autofs.yml
 - import_tasks: software/bitwarden.yml
 - import_tasks: software/dbeaver.yml
@@ -20,6 +25,7 @@
 - import_tasks: software/vivaldi.yml
 - import_tasks: software/vlc.yml
 
+# Handling of dotfiles or other configuration files.
 - import_tasks: config_files/editorconfig.yml
 - import_tasks: config_files/vim.yml
 - import_tasks: config_files/git.yml
