@@ -37,6 +37,7 @@ gnome: true
 ################################################################################
 # Others
 ################################################################################
+samsung_printer: true
 
 # This list is used to define list of applications which will be showed as
 # favorites in activities start screen.

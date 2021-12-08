@@ -16,3 +16,5 @@
 - include_tasks: "system_setup_{{ ansible_distribution }}.yml"
 
 - import_tasks: packages.yml
+
+- import_tasks: printer.yml
