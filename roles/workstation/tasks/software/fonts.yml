@@ -1,0 +1,28 @@
+---
+
+- name: Enable repository for better fonts.
+  tags: packages,software,fonts
+  community.general.copr:
+    host: copr.fedorainfracloud.org
+    state: enabled
+    name: dawid/better_fonts
+  when:
+    - ansible_distribution == 'Fedora'
+    - fonts is defined
+    - fonts
+
+- name: Install additional fonts from repositories.
+  tags: packages,software,fonts
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - fira-code-fonts
+    - google-droid-sans-mono-fonts
+    - jetbrains-mono-fonts
+    - fontconfig-enhanced-defaults
+    #- fontconfig-font-replacements #TODO: see https://github.com/silenc3r/fedora-better-fonts/issues/37
+  when:
+    - ansible_distribution == 'Fedora'
+    - fonts is defined
+    - fonts

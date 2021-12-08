@@ -6,8 +6,7 @@
   tags: always
 
 # Enable 3rd party repositories on Fedora
-- include_tasks: repositories.yml
-  when: ansible_distribution == 'Fedora'
+- import_tasks: repositories.yml
 
 # install software
 - import_tasks: software_development.yml
@@ -17,3 +16,5 @@
 - include_tasks: "system_setup_{{ ansible_distribution }}.yml"
 
 - import_tasks: packages.yml
+
+- import_tasks: printer.yml

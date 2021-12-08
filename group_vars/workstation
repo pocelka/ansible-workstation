@@ -21,6 +21,9 @@ bitwarden: true
 discord: true
 dbeaver: true
 dconf_editor: true
+fonts: true                             # To install additional fonts.
+hexchat: true
+media_codecs: true
 mailspring: true
 mailspring_theme: false                 # currently disabled as themes don't show correctly gmail nested folders/labels
 nvidia: true
@@ -34,6 +37,7 @@ gnome: true
 ################################################################################
 # Others
 ################################################################################
+samsung_printer: true
 
 # This list is used to define list of applications which will be showed as
 # favorites in activities start screen.

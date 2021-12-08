@@ -1,0 +1,22 @@
+---
+
+- name: Enable repository for Samsung printer drivers.
+  tags: system,setup,printer
+  ansible.builtin.dnf:
+    name: "https://negativo17.org/repos/uld/fedora-{{ ansible_distribution_major_version }}/x86_64/uld-1.00.39-2.fc{{ ansible_distribution_major_version }}.x86_64.rpm"
+    state: present
+    disable_gpg_check: true
+  when:
+    - ansible_distribution == 'Fedora'
+    - samsung_printer is defined
+    - samsung_printer
+
+- name: Install Samsung unified driver.
+  tags: packages,sofware,printer
+  ansible.builtin.package:
+    name: uld
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - samsung_printer is defined
+    - samsung_printer

@@ -1,7 +1,7 @@
 ---
 
 - name: Add repository for visual studio code.
-  tags: system,packages,software,vscode,repository
+  tags: system,packages,software,vscode
   ansible.builtin.yum_repository:
     name: vscode
     description: vscode

@@ -1,0 +1,29 @@
+---
+
+- name: Change gedit settings - general.
+  tags: gnome,gnome_settings,gedit
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "display-right-margin"
+      value: "true"
+    - key: "right-margin-position"
+      value: "uint32 120"
+    - key: "tabs-size"
+      value: "uint32 4"
+    - key: "insert-spaces"
+      value: "true"
+
+- name: Change gedit settings - plugins
+  tags: gnome,gnome_settings,gedit
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/gedit/plugins/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "active-plugins"
+      value: "['spell', 'sort', 'openlinks', 'modelines', 'filebrowser', 'docinfo']"  # TODO: shows warning when executed
+    - key: "spell/highlight-misspelled"
+      value: "true"

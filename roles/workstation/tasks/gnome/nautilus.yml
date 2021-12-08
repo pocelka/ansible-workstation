@@ -1,0 +1,28 @@
+---
+
+- name: Change nautilus settings - general.
+  tags: gnome,gnome_settings,nautilus
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/nautilus/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "list-view/use-tree-view"
+      value: "false"
+    - key: "preferences/default-folder-viewer"
+      value: "'list-view'"
+    - key: "preferences/search-filter-time-type"
+      value: "'last_modified'"
+    - key: "preferences/search-view"
+      value: "'list-view'"
+    - key: "preferences/show-create-link"
+      value: "true"
+    - key: "window-state/maximized"
+      value: "true"
+
+- name: Change nautilus settings - directories before files.
+  tags: gnome,gnome_settings,nautilus
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gtk/settings/file-chooser/sort-directories-first"
+    value: "true"

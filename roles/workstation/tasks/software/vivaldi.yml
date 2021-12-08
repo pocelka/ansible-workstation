@@ -1,7 +1,7 @@
 ---
 
 - name: Add repository for vivaldi browser.
-  tags: system,packages,software,vivaldi,repository
+  tags: system,packages,software,vivaldi
   ansible.builtin.yum_repository:
     name: vivaldi
     description: vivaldi
