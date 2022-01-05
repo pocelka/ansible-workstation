@@ -21,6 +21,7 @@
     - gnome-system-monitor
     - gnome-terminal
     - gnome-tweaks
+    - chrome-gnome-shell
     - nautilus
   when:
     - ansible_distribution == 'Fedora'
