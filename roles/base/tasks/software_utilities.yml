@@ -13,6 +13,7 @@
       - "{{ nfs_client_package }}"
       - rsync
       - screen
+      - unrar
       - "{{ vim_package }}"
       - wget
       - whois
