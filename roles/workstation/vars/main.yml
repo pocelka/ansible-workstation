@@ -2,3 +2,7 @@
 
 autofs_master_path: "/etc/auto.master"
 autofs_htpc_path: "/etc/auto.htpc"
+
+oracle_client_url: "214000"
+oracle_client_zip: "21.4.0.0.0"
+oracle_client_dir: "21_4"

@@ -1,0 +1,24 @@
+---
+
+- name: test
+  hosts: all
+  gather_facts: False
+  tasks:
+    - name: API call
+      ansible.builtin.uri:
+        url: "https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip"
+        follow_redirects: no
+        method: HEAD
+        return_content: true
+      register: result
+      until: result.status == 200
+      retries: 3
+
+    - name: Debug message
+      ansible.builtin.debug:
+        msg: "{{ result }}"
+
+    - name: save etag
+      ansible.builtin.copy:
+        content: "{{ result.etag }}"
+        dest: /home/peter/software/etag.log

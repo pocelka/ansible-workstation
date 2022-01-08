@@ -1,0 +1,69 @@
+---
+
+- name: Create directory for software installed outside package manager.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ user_home }}/software"
+    state: directory
+    mode: 0775
+
+- name: Download and unarchive Oracle instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-basic-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/ojdbc8.jar"
+    remote_src: yes
+
+- name: Download and unarchive Oracle SQL*Plus for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-sqlplus-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/sqlplus"
+    remote_src: yes
+
+- name: Download and unarchive Oracle tools for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-tools-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/sqlldr"
+    remote_src: yes
+
+- name: Download and unarchive Oracle JDBC for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-jdbc-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/orai18n.jar"
+    remote_src: yes
+
+- name: Download and unarchive Oracle ODBC for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-odbc-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/odbc_update_ini.sh"
+    remote_src: yes
+
+- name: Modify bash profile to set environment variables for Oracle client tools.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.lineinfile:
+    path: "{{ user_home }}/.bash_profile"
+    state: present
+    backup: true
+    regexp: "{{ item.search_line }}"
+    line: "{{ item.add_line }}"
+  loop:
+    - search_line: "^LD_LIBRARY_PATH={{ user_home }}/software/instantclient_{{ oracle_client_dir }}; export LD_LIBRARY_PATH$"
+      add_line: "LD_LIBRARY_PATH={{ user_home }}/software/instantclient_{{ oracle_client_dir }}; export LD_LIBRARY_PATH"
+    - search_line: "^PATH=$PATH:$LD_LIBRARY_PATH; export PATH$"
+      add_line: "PATH=$PATH:$LD_LIBRARY_PATH; export PATH"

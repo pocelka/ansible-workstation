@@ -35,6 +35,9 @@ vivaldi: true
 # desktop environments
 gnome: true
 
+# oracle instant client and tools
+oracle_dev_tools: true
+
 ################################################################################
 # Others
 ################################################################################
