@@ -26,7 +26,7 @@
     - key: new-tab
       value: "'<Control>t'"
     - key: copy
-      value: "'<Control>c'"
+      value: "'<Control><Shift>c'"
     - key: paste
       value: "'<Control>v'"
     - key: find

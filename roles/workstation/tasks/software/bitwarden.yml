@@ -1,6 +1,6 @@
 ---
 
-- name: Install bitwarde.
+- name: Install bitwarden.
   tags: packages,software,bitwarden
   community.general.flatpak:
     name: com.bitwarden

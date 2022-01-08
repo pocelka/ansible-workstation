@@ -22,6 +22,7 @@ discord: true
 dbeaver: true
 dconf_editor: true
 fonts: true                             # To install additional fonts.
+gaming: true
 hexchat: true
 media_codecs: true
 mailspring: true
@@ -33,6 +34,9 @@ vivaldi: true
 
 # desktop environments
 gnome: true
+
+# oracle instant client and tools
+oracle_dev_tools: true
 
 ################################################################################
 # Others

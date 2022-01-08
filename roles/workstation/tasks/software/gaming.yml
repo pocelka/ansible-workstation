@@ -1,0 +1,40 @@
+---
+
+- name: Install Steam.
+  tags: packages,software,gaming,steam
+  ansible.builtin.package:
+    name: steam
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - gaming is defined
+    - gaming
+
+- name: Install GOverlay.
+  tags: packages,software,gaming,goverlay
+  ansible.builtin.package:
+    name: goverlay
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - gaming is defined
+    - gaming
+
+- name: Install Lutris.
+  tags: packages,software,gaming,lutris
+  ansible.builtin.package:
+    name: lutris
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - gaming is defined
+    - gaming
+
+- name: Install GOG client.
+  tags: packages,software,gaming,gog
+  community.general.flatpak:
+    name: "io.github.sharkwouter.Minigalaxy"
+    state: present
+  when:
+    - gaming is defined
+    - gaming

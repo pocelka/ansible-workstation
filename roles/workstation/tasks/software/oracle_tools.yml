@@ -1,0 +1,207 @@
+---
+
+- name: Create directory for software installed outside package manager.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ user_home }}/software"
+    state: directory
+    mode: 0775
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Download and unarchive Oracle instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-basic-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/ojdbc8.jar"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Download and unarchive Oracle SQL*Plus for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-sqlplus-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/sqlplus"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Download and unarchive Oracle tools for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-tools-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/sqlldr"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Download and unarchive Oracle JDBC for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-jdbc-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/orai18n.jar"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Download and unarchive Oracle ODBC for instant client.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/linux/instantclient/{{ oracle_client_url }}/instantclient-odbc-linux.x64-{{ oracle_client_zip }}dbru.zip"
+    dest: "{{ user_home }}/software/"
+    creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/odbc_update_ini.sh"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Modify bash profile to set environment variables for Oracle client tools.
+  tags: packages,software,oracle
+  become_user: "{{ user_name }}"
+  ansible.builtin.lineinfile:
+    path: "{{ user_home }}/.bash_profile"
+    state: present
+    backup: true
+    regexp: "{{ item.search_line }}"
+    line: "{{ item.add_line }}"
+  loop:
+    - search_line: "^LD_LIBRARY_PATH={{ user_home }}/software/instantclient_{{ oracle_client_dir }}; export LD_LIBRARY_PATH$"
+      add_line: "LD_LIBRARY_PATH={{ user_home }}/software/instantclient_{{ oracle_client_dir }}; export LD_LIBRARY_PATH"
+    - search_line: "^PATH=$PATH:$LD_LIBRARY_PATH; export PATH$"
+      add_line: "PATH=$PATH:$LD_LIBRARY_PATH; export PATH"
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Install JDK11 SDK.
+  tags: packages,software,oracle
+  ansible.builtin.package:
+    name: "java-11-openjdk-devel.x86_64"
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Install SQL Developer.
+  tags: packages,software,oracle
+  ansible.builtin.dnf:
+    name: "{{ oracle_developer }}"
+    state: present
+    disable_gpg_check: true
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Create SQLcl version file.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ user_home  }}/software/sqlcl.ver"
+    state: touch
+    mode: 0775
+  when:
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Get currently installed SQLcl version.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.set_fact:
+    sqlcl_local_version: "{{ lookup('file', '{{ user_home  }}/software/sqlcl.ver') }}"
+  when:
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Get information about the latest SQLcl version from Oracle web site.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.uri:
+    url: "https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip"
+    follow_redirects: no
+    method: HEAD
+    return_content: true
+  register: sqlcl_web_version
+  until: sqlcl_web_version.status == 200
+  retries: 3
+  when:
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Remove SQLcl installation directory.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ user_home  }}/software/sqlcl"
+    state: absent
+  when:
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+    - sqlcl_web_version.etag != sqlcl_local_version
+
+- name: Download the latest SQLcl from Oracle web site.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip"
+    dest: "{{ user_home  }}/software/"
+    remote_src: yes
+  when:
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+    - sqlcl_web_version.etag != sqlcl_local_version
+
+- name: Mark the latest SQLcl version into version file.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.copy:
+    content: "{{ sqlcl_web_version.etag }}"
+    dest: "{{ user_home  }}/software/sqlcl.ver"
+    mode: 0775
+  when:
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+    - sqlcl_web_version.etag != sqlcl_local_version
+
+- name: Modify bash profile to set environment variables for Oracle SQLcl.
+  tags: packages,software,oracle,sqlcl
+  become_user: "{{ user_name }}"
+  ansible.builtin.lineinfile:
+    path: "{{ user_home }}/.bash_profile"
+    state: present
+    backup: true
+    regexp: "{{ item.search_line }}"
+    line: "{{ item.add_line }}"
+  loop:
+    - search_line: "^SQLCL_PATH={{ user_home }}/software/sqlcl/bin; export SQLCL_PATH$"
+      add_line: "SQLCL_PATH={{ user_home }}/software/sqlcl/bin; export SQLCL_PATH"
+    - search_line: "^PATH=$PATH:$SQLCL_PATH; export PATH$"
+      add_line: "PATH=$PATH:$SQLCL_PATH; export PATH"
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
