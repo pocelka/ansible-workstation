@@ -7,6 +7,10 @@
     path: "{{ user_home }}/software"
     state: directory
     mode: 0775
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
 
 - name: Download and unarchive Oracle instant client.
   tags: packages,software,oracle
@@ -16,6 +20,10 @@
     dest: "{{ user_home }}/software/"
     creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/ojdbc8.jar"
     remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
 
 - name: Download and unarchive Oracle SQL*Plus for instant client.
   tags: packages,software,oracle
@@ -25,6 +33,10 @@
     dest: "{{ user_home }}/software/"
     creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/sqlplus"
     remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
 
 - name: Download and unarchive Oracle tools for instant client.
   tags: packages,software,oracle
@@ -34,6 +46,10 @@
     dest: "{{ user_home }}/software/"
     creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/sqlldr"
     remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
 
 - name: Download and unarchive Oracle JDBC for instant client.
   tags: packages,software,oracle
@@ -43,6 +59,10 @@
     dest: "{{ user_home }}/software/"
     creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/orai18n.jar"
     remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
 
 - name: Download and unarchive Oracle ODBC for instant client.
   tags: packages,software,oracle
@@ -52,6 +72,10 @@
     dest: "{{ user_home }}/software/"
     creates: "{{ user_home }}/software/instantclient_{{ oracle_client_dir }}/odbc_update_ini.sh"
     remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
 
 - name: Modify bash profile to set environment variables for Oracle client tools.
   tags: packages,software,oracle
@@ -67,3 +91,30 @@
       add_line: "LD_LIBRARY_PATH={{ user_home }}/software/instantclient_{{ oracle_client_dir }}; export LD_LIBRARY_PATH"
     - search_line: "^PATH=$PATH:$LD_LIBRARY_PATH; export PATH$"
       add_line: "PATH=$PATH:$LD_LIBRARY_PATH; export PATH"
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Install JDK11 SDK
+  tags: packages,software,oracle
+  #become_user: "{{ user_name }}"
+  ansible.builtin.package:
+    name: "java-11-openjdk-devel.x86_64"
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
+
+- name: Install SQL Developer
+  tags: packages,software,oracle
+  #become_user: "{{ user_name }}"
+  ansible.builtin.dnf:
+    name: "{{ oracle_developer }}"
+    state: present
+    disable_gpg_check: true
+  when:
+    - ansible_distribution == 'Fedora'
+    - oracle_dev_tools is defined
+    - oracle_dev_tools
