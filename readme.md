@@ -1,8 +1,8 @@
 # Motivation
 
-Lately I decided that at home, Linux is better environment for my daily work, although I still use Windows 10 for gaming. As with any OS setup, it takes time to configure everything. I decided to use Ansible as my go to tool for configuration as it is easier to document and execute compared to shell scripts.
+I decided, that at home, Linux is better environment for my daily work, although I still use Windows 10 for gaming. As with any OS setup, it takes time to configure everything. Ansible can greatly simplify the whole configuration process as well as to document everything, compared to shell scripts.
 
-In the past I used Fedora, Ubuntu and Manjaro, however after few issues with Manjaro a decided to go back to Fedora. Over the years when I used mainly Windows, KDE looked like obvious alternative, but after short proof of concept with Ansible playbook I decided to use Gnome instead.
+In the past I used Fedora, Ubuntu and Manjaro, however after few issues with Manjaro a decided to go back to Fedora. Over the years when I used mainly Windows, KDE looked like obvious alternative, but after short proof of concept with Ansible playbook I decided to use Gnome instead due to dconf utility.
 
 This repository contains copy of configuration that I'm using for my personal setup of my workstation (locally).
 
