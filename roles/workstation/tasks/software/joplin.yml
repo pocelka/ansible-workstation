@@ -1,0 +1,11 @@
+---
+
+- name: Install joplin.
+  tags: packages,software,joplin
+  community.general.flatpak:
+    name: net.cozic.joplin_desktop
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - joplin is defined
+    - joplin

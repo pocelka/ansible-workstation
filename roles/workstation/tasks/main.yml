@@ -19,6 +19,7 @@
 - import_tasks: software/gaming.yml
 - import_tasks: software/hexchat.yml
 - import_tasks: software/discord.yml
+- import_tasks: software/joplin.yml
 - import_tasks: software/media_codecs.yml
 - import_tasks: software/mailspring.yml
 - import_tasks: software/nvidia.yml
