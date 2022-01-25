@@ -24,6 +24,7 @@ dconf_editor: true
 fonts: true                             # To install additional fonts.
 gaming: true
 hexchat: true
+joplin: true
 media_codecs: true
 mailspring: true
 mailspring_theme: false                 # currently disabled as themes don't show correctly gmail nested folders/labels
