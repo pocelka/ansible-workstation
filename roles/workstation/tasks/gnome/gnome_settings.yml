@@ -42,3 +42,10 @@
       value: "@as []"
     - key: "show-desktop"
       value: "['<Super>d']"
+
+- name: Disable screen lock in inactivity.
+  tags: gnome,gnome_settings,lock
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/screensaver/lock-enabled"
+    value: "false"
