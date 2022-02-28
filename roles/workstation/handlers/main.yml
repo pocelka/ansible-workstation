@@ -5,3 +5,8 @@
   ansible.builtin.service:
     name: autofs
     state: restarted
+
+- name: restart_virtualbox_service
+  ansible.builtin.service:
+    name: vboxdrv
+    state: restarted
