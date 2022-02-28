@@ -49,6 +49,10 @@
     path: "{{ user_home }}/htpc"
     state: directory
     mode: 0775
+  when:
+    - ansible_distribution == 'Fedora'
+    - autofs is defined
+    - autofs
 
 - name: Create symbolic links for HTPC shares.
   tags: packages,software,autofs
@@ -62,3 +66,7 @@
       dest: "{{ user_home }}/htpc/backup_medium"
     - src: /nfs/data
       dest: "{{ user_home }}/htpc/data"
+  when:
+    - ansible_distribution == 'Fedora'
+    - autofs is defined
+    - autofs
