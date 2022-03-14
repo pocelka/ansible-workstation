@@ -15,3 +15,4 @@
     - pre-commit                              # for git repository pre-commit checks
     - ShellCheck
     - jq
+    - podman-compose
