@@ -6,7 +6,7 @@
     name: vivaldi
     description: vivaldi
     baseurl: "https://repo.vivaldi.com/archive/rpm/$basearch"
-    file: vivaldi-fedora
+    file: vivaldi
     enabled: true
     gpgcheck: true
     gpgkey: "https://repo.vivaldi.com/archive/linux_signing_key.pub"

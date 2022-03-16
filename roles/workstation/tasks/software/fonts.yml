@@ -26,3 +26,47 @@
     - ansible_distribution == 'Fedora'
     - fonts is defined
     - fonts
+
+- name: Create directory for fonts installed manually from archive files.
+  tags: packages,software,fonts
+  become_user: "{{ user_name }}"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+  loop:
+    - "{{ user_home }}/.local/share/fonts"
+    - "{{ user_home }}/.local/share/fonts/droid-sans-mono-nerd"
+    - "{{ user_home }}/.local/share/fonts/fira-code-nerd"
+  when:
+    - ansible_distribution == 'Fedora'
+    - fonts is defined
+    - fonts
+
+- name: Install DroidSans mono nerd fonts from archive files.
+  tags: packages,software,fonts
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/DroidSansMono.zip"
+    dest: "{{ user_home }}/.local/share/fonts/droid-sans-mono-nerd"
+    creates: "{{ user_home }}/.local/share/fonts/droid-sans-mono-nerd/'Droid Sans Mono Nerd Font Complete Mono Windows Compatible.otf'"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - fonts is defined
+    - fonts
+  notify: rebuild_fonts_cache
+
+- name: Install FiraCode nerd fonts from archive files.
+  tags: packages,software,fonts
+  become_user: "{{ user_name }}"
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip"
+    dest: "{{ user_home }}/.local/share/fonts/fira-code-nerd"
+    creates: "{{ user_home }}/.local/share/fonts/fira-code-nerd/'Fira Code Bold Nerd Font Complete Mono.otf'"
+    remote_src: yes
+  when:
+    - ansible_distribution == 'Fedora'
+    - fonts is defined
+    - fonts
+  notify: rebuild_fonts_cache

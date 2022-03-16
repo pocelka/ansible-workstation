@@ -1,0 +1,33 @@
+---
+
+- name: Install Starship terminal enhancement.
+  tags: packages,software,starship
+  ansible.builtin.package:
+    name: starship
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - starship is defined
+    - starship
+
+- name: Modify bash profile to enable starship.
+  tags: packages,software,starship
+  become_user: "{{ user_name }}"
+  ansible.builtin.lineinfile:
+    path: "{{ user_home }}/.bashrc"
+    state: present
+    backup: true
+    regexp: '^eval "$(starship init bash)"'
+    line: 'eval "$(starship init bash)"'
+  when:
+    - ansible_distribution == 'Fedora'
+    - starship is defined
+    - starship
+
+- name: Copy starship config file.
+  tags: packages,software,starship
+  become_user: "{{ user_name }}"
+  ansible.builtin.copy:
+    dest: "{{ user_home }}/.config/starship.toml"
+    src: "starship.toml"
+    mode: 0600

@@ -1,7 +1,6 @@
 ---
 
 - name: restart_autofs
-  tags: autofs,system,system setup
   ansible.builtin.service:
     name: autofs
     state: restarted
@@ -10,3 +9,7 @@
   ansible.builtin.service:
     name: vboxdrv
     state: restarted
+
+- name: rebuild_fonts_cache
+  become: true
+  ansible.builtin.shell: "fc-cache -v -f"
