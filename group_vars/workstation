@@ -30,6 +30,7 @@ mailspring: true
 mailspring_theme: false                 # currently disabled as themes don't show correctly gmail nested folders/labels
 nvidia: true
 starship: true
+vagrant: true
 vlc: true
 virtualbox: true
 visual_studio_code: true

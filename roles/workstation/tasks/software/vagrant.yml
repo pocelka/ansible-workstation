@@ -1,0 +1,11 @@
+---
+
+- name: Install vagrant.
+  tags: packages,software,vagrant
+  ansible.builtin.package:
+    name: vagrant
+    state: present
+  when:
+    - ansible_distribution == 'Fedora'
+    - vagrant is defined
+    - vagrant
