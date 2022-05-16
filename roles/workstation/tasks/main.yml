@@ -1,5 +1,8 @@
 ---
 
+# Pre-setup
+- import_tasks: software/fonts.yml
+
 # Gnome settings
 - import_tasks: gnome/remove_software.yml
 - import_tasks: gnome/packages.yml
@@ -15,7 +18,6 @@
 - import_tasks: software/bitwarden.yml
 - import_tasks: software/dbeaver.yml
 - import_tasks: software/dconf_editor.yml
-- import_tasks: software/fonts.yml
 - import_tasks: software/gaming.yml
 - import_tasks: software/hexchat.yml
 - import_tasks: software/discord.yml

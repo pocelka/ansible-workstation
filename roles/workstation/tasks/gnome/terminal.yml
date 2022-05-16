@@ -1,7 +1,14 @@
 ---
 
-- name: Change gnome-terminal settings.
+- name: Change gnome-terminal settings - general.
   tags: gnome,gnome_settings,gnome-terminal
+  become_user: "{{ user_name }}"
+  community.general.dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/scrollback-unlimited"
+    value: "true"
+
+- name: Change gnome-terminal settings - font.
+  tags: terminal
   become_user: "{{ user_name }}"
   community.general.dconf:
     key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
@@ -13,6 +20,8 @@
       value: "'FiraCode Nerd Font 11'"
     - key: scrollback-unlimited
       value: "true"
+  when:
+    - fonts | default(False)
 
 - name: Change gnome-terminal shortcuts.
   tags: gnome,gnome_settings,gnome-terminal
