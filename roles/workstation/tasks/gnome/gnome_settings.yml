@@ -7,9 +7,14 @@
     create: false
     path: /etc/gdm/custom.conf
     section: daemon
-    option: AutomaticLoginEnable
-    value: "True"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     state: present
+  loop:
+    - option: "AutomaticLoginEnable"
+      value: "True"
+    - option: "AutomaticLogin"
+      value: "{{ user_name }}"
 
 - name: Add Slovak keyboard
   tags: gnome,gnome_settings,keyboard
